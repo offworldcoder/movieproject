@@ -43,6 +43,8 @@ export class Movies extends Lightning.Component {
     this.tag("Carousel").patch({
       movies: movies
     });
+
+    this.tag("Carousel").updateItemFocus();
   }
 
   truncatedTitle(title, max) {
