@@ -9,6 +9,13 @@ export class MovieDetails extends Lightning.Component {
         w: 1920,
         h: 1080,
         color: 0xffffff00
+      },
+      Title: {
+        x: 50,
+        y: 50,
+        text: {
+          text: ''
+        }
       }
     }
   }
@@ -17,12 +24,20 @@ export class MovieDetails extends Lightning.Component {
     console.log(`MovieDetails: movieId is ${JSON.stringify(args)}`);
     console.log(`MovieDetails: movieId is ${args.movieId}`);
 
-    const movieDetails = getMovieDetails(args.movieId);
-    console.log(`MovieDetails: movieDetails ${JSON.stringify(movieDetails)}`)
-    const backgroundPosterURL = `https://www.themoviedb.org/t/p/w1066_and_h600_bestv2${movieDetails.backdrop_path}`
-    // this.tag("Background").patch({
-    //   src: backgroundPosterURL
-    // })
+    this.useTheDetails(args.movieId);
   }
-  //  https://www.themoviedb.org/t/p/w1066_and_h600_bestv2/egoyMDLqCxzjnSrWOz50uLlJWmD.jpg
+
+  async useTheDetails(movieId) {
+    const movieDetails = await getMovieDetails(movieId);
+    console.log(`MovieDetails: movieDetails ${JSON.stringify(movieDetails)}`)
+    const backgroundPosterURL = `https://image.tmdb.org/t/p/w1066_and_h600_bestv2${movieDetails.backdrop_path}`
+    this.tag("Background").patch({
+      Title: {
+        text: {
+          text: movieDetails.title,
+        }
+      },
+      src: backgroundPosterURL
+    })
+  }
 }
