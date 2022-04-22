@@ -17,6 +17,11 @@ const buildMovieDetailsURL = (movieId) => {
   return url;
 }
 
+const buildSimilarMoviesURL = (movieId) => {
+  const url = DETAILS_URL + movieId + `/similar?api_key=${API_KEY}`;
+  return url;
+}
+
 const getMovieDetails = async (movieId) => {
   const detailsURL = buildMovieDetailsURL(movieId);
   console.log(`getMovieDetails: Using movie details url "${detailsURL}"`);
@@ -25,4 +30,12 @@ const getMovieDetails = async (movieId) => {
   return results.json();
 }
 
-export { getTrendingMovies, getMovieDetails }
+const getSimilarMovies = async (movieId) => {
+  const detailsURL = buildSimilarMoviesURL(movieId);
+  console.log(`getSimilarMovies: Using similar movies url "${detailsURL}"`);
+  const results = await fetch(detailsURL);
+  console.log(`getSimilarMovies: results ${JSON.stringify(results)}`);
+  return results.json();
+}
+
+export { getTrendingMovies, getMovieDetails, getSimilarMovies }

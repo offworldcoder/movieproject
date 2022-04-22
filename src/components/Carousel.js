@@ -50,7 +50,7 @@ export class Carousel extends Lightning.Component {
   _handleEnter() {
     const children = this.tag("Results").children;
     const movieId = children[this.index].movieId;
-    console.log(`_handleEnter movideId ${movieId}`);
+    console.log(`_handleEnter movieId ${movieId}`);
 
     Router.navigate(`details/${movieId}`);
   }

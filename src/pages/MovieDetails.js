@@ -1,4 +1,4 @@
-import { Lightning } from "@lightningjs/sdk";
+import { Lightning, Router } from "@lightningjs/sdk";
 import { getMovieDetails } from "../lib/API";
 
 export class MovieDetails extends Lightning.Component {
@@ -68,7 +68,7 @@ export class MovieDetails extends Lightning.Component {
   set params(args) {
     console.log(`MovieDetails: movieId is ${JSON.stringify(args)}`);
     console.log(`MovieDetails: movieId is ${args.movieId}`);
-
+    this.movieId = args.movieId;
     this.useTheDetails(args.movieId);
   }
 
@@ -84,5 +84,10 @@ export class MovieDetails extends Lightning.Component {
     this.releaseDate = `Release Date: ${movieDetails.release_date}`;
     this.overview = movieDetails.overview;
     this.movieImageURL = moveImageURL;
+  }
+
+  _handleRight() {
+    console.log("_handleRight");
+    Router.navigate(`similarmovies/${this.movieId}`);
   }
 }
