@@ -1,4 +1,4 @@
-import { Lightning, Router } from "@lightningjs/sdk";
+import { Lightning, Router, Utils } from "@lightningjs/sdk";
 import { getMovieDetails } from "../lib/API";
 
 export class MovieDetails extends Lightning.Component {
@@ -54,6 +54,12 @@ export class MovieDetails extends Lightning.Component {
           w: 450,
           src: this.bindProp("movieImageURL")
         }
+      },
+      Arrow: {
+        x: 1860,
+        y: 1000,
+        mount: 1.0,
+        src: Utils.asset("images/right-arrow.png")
       }
     }
   }
