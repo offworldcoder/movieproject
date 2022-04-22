@@ -19,6 +19,10 @@ export class Movies extends Lightning.Component {
     }
   }
 
+  _getFocused() {
+    return this.tag("Carousel");
+  }
+
   async _init() {
     let data = await getTrendingMovies();
     let movies = [];
