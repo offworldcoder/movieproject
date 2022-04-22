@@ -31,7 +31,7 @@ export class Movies extends Lightning.Component {
     data.results.map(movie => {
       movies.push({
         type: CarouselItem,
-        title: movie.title,
+        title: this.truncatedTitle(movie.title, 18),
         imageUrl: `https://image.tmdb.org/t/p/w440_and_h660_face${movie.poster_path}`
       });
     })
@@ -41,5 +41,12 @@ export class Movies extends Lightning.Component {
     this.tag("Carousel").patch({
       movies: movies
     });
+  }
+
+  truncatedTitle(title, max) {
+    if (title.length <= max) {
+      return title;
+    }
+    return title.substring(0, max);
   }
 }
