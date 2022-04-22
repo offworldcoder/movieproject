@@ -5,10 +5,8 @@ export class MovieDetails extends Lightning.Component {
   static _template() {
     return {
       Background: {
-        rect: true,
         w: 1920,
         h: 1080,
-        color: 0xffffff00
       },
       Details: {
         x: 20,
@@ -60,10 +58,30 @@ export class MovieDetails extends Lightning.Component {
     }
   }
 
+  _init() {
+    this.tag('Background').on('txLoaded', () => {
+      console.log('texture loaded: ' + this.tag('Image').src)
+      this.tag('Background').patch({
+        smooth: {
+          alpha: [1, { duration: 0.1 }]
+        }
+      });
+    })
+  }
+
+  _disable() {
+    this.tag("Background").patch({
+      src: '',
+      alpha: 0.000001
+    });
+  }
+
   set params(args) {
     console.log(`MovieDetails: movieId is ${JSON.stringify(args)}`);
     console.log(`MovieDetails: movieId is ${args.movieId}`);
     this.movieId = args.movieId;
+
+    // this.tag("Background").alpha = 0.000001;
     this.useTheDetails(args.movieId);
   }
 

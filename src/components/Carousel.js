@@ -34,7 +34,7 @@ export class Carousel extends Lightning.Component {
     });
   }
 
-  _active() {
+  _enable() {
     this.updateItemFocus();
   }
 
