@@ -6,8 +6,8 @@ export class Carousel extends Lightning.Component {
       Background: {
         rect: true,
         w: 1920,
-        h: 1080,
-        color: 0xff222222
+        h: 550,
+        color: 0xaa222222
       },
       Results: {
         rect: true,
@@ -23,6 +23,10 @@ export class Carousel extends Lightning.Component {
 
   _init() {
     this.index = 0;
+  }
+
+  _active() {
+    this.updateItemFocus();
   }
 
   _handleLeft() {

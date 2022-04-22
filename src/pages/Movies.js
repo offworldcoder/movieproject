@@ -11,9 +11,10 @@ export class Movies extends Lightning.Component {
       Background: {
         w: 1920,
         h: 1080,
-        color: Utils.asset("images/background.jpeg")
+        src: Utils.asset("images/background.jpeg")
       },
       Carousel: {
+        y: 300,
         type: Carousel
       }
     }
