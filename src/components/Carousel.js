@@ -83,9 +83,14 @@ export class Carousel extends Lightning.Component {
           smooth: { scale: 1.2 },
           zIndex: 2
         })
-        console.log(`item.x is x ${item.x} y ${item.y} w ${item.w}`);
-        if (i > 2 && i < children.length - 5) {
-          const newCarouselPosition = -(i - 2) * (item.w + 20);
+        console.log(`i ${i} children.length ${children.length} - item.x is x ${item.x} y ${item.y} w ${item.w}`);
+        if (i >= 2 && i < children.length - 3) {
+          let newCarouselPosition = -(i - 2) * (item.w + 20);
+          if (i == children.length - 4) {
+            console.log("LAST");
+            newCarouselPosition -= 40;
+          }
+
           this.tag("Results").patch({
             smooth: {
               x: [newCarouselPosition, { duration: 0.5 }]
