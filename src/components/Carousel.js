@@ -23,6 +23,15 @@ export class Carousel extends Lightning.Component {
 
   _init() {
     this.index = 0;
+    this.moving = false;
+
+    this.tag("Results").transition('x').on('start', () => {
+      this.moving = true;
+    });
+
+    this.tag("Results").transition('x').on('finish', () => {
+      this.moving = false;
+    });
   }
 
   _active() {
@@ -48,6 +57,10 @@ export class Carousel extends Lightning.Component {
   }
 
   _handleEnter() {
+    if (this.moving) {
+      return;
+    }
+
     const children = this.tag("Results").children;
     const movieId = children[this.index].movieId;
     console.log(`_handleEnter movieId ${movieId}`);
@@ -61,13 +74,24 @@ export class Carousel extends Lightning.Component {
       const item = children[i];
       if (i != this.index) {
         item.patch({
-          y: 0
+          smooth: { scale: 1.0 },
+          zIndex: 1,
         })
       }
       else {
         item.patch({
-          y: 20
+          smooth: { scale: 1.2 },
+          zIndex: 2
         })
+        console.log(`item.x is x ${item.x} y ${item.y} w ${item.w}`);
+        if (i > 2 && i < children.length - 5) {
+          const newCarouselPosition = -(i - 2) * (item.w + 20);
+          this.tag("Results").patch({
+            smooth: {
+              x: [newCarouselPosition, { duration: 0.5 }]
+            }
+          })
+        }
       }
     }
   }
