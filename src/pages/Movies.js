@@ -10,14 +10,8 @@ export class Movies extends Lightning.Component {
         h: 1080,
         color: Utils.asset("images/background.jpeg")
       },
-      Results: {
-        rect: true,
-        color: 0xff111111,
-        flex: {
-          direction: 'column',
-          padding: 20,
-        },
-        children: []
+      Carousel: {
+        type: Carousel
       }
     }
   }
@@ -36,12 +30,8 @@ export class Movies extends Lightning.Component {
 
     console.log(`movies ${JSON.stringify(movies)}`);
 
-    this.tag("Results").patch({
-      children: movies
+    this.tag("Carousel").patch({
+      movies: movies
     });
-
-    // this.tag('Results').patch({
-    //   children: movies
-    // });
   }
 }

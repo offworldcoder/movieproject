@@ -15,7 +15,7 @@ export class Carousel extends Lightning.Component {
           direction: 'column',
           padding: 20,
         },
-        children: []
+        children: this.bindProp('movies')
       }
     }
   }
