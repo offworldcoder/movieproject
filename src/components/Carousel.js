@@ -6,12 +6,12 @@ export class Carousel extends Lightning.Component {
       Background: {
         rect: true,
         w: 1920,
-        h: 550,
+        h: 500,
         color: 0xaa222222
       },
       Results: {
-        rect: true,
-        color: 0xff111111,
+        y: 250,
+        mountY: 0.5,
         flex: {
           direction: 'row',
           padding: 20,
