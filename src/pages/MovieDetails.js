@@ -14,33 +14,28 @@ export class MovieDetails extends Lightning.Component {
         x: 20,
         y: 720,
         w: 1880,
-        h: 360,
+        h: 350,
         rect: true,
         colorTop: 0xaa111111,
         colorBottom: 0x00111111,
-        // flex: {
-        //   direction: 'row',
-        //   padding: 20,
-        // },
-        // children: [
-        //   {
         Title: {
-          x: 20,
-          y: 80,
+          x: 500,
+          y: 20,
           text: {
             text: this.bindProp('title')
           }
         },
         ReleaseDate: {
-          x: 20,
-          y: 140,
+          x: 1860,
+          y: 20,
+          mountX: 1.0,
           text: {
             text: this.bindProp('releaseDate')
           }
         },
         Overview: {
           x: 20,
-          y: 200,
+          y: 80,
           w: 1800,
           h: 380,
           text: {
