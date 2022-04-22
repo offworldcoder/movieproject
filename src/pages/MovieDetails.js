@@ -26,14 +26,14 @@ export class MovieDetails extends Lightning.Component {
         //   {
         Title: {
           x: 20,
-          y: 20,
+          y: 30,
           text: {
             text: this.bindProp('title')
           }
         },
         ReleaseDate: {
           x: 20,
-          y: 70,
+          y: 80,
           text: {
             text: this.bindProp('releaseDate')
           }
