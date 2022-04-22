@@ -1,0 +1,6 @@
+{
+  "name": "movieproject",
+  "identifier": "com.sky.app.movieproject",
+  "version": "1.0.0",
+  "icon": "./static/icon.png"
+}

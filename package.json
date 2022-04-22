@@ -1,0 +1,7 @@
+{
+  "name": "com.sky.app.movieproject",
+  "description": "movieproject",
+  "dependencies": {
+    "@lightningjs/sdk": "^4.8.3"
+  }
+}
