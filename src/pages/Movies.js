@@ -1,10 +1,13 @@
 import { Lightning, Utils } from "@lightningjs/sdk";
 import { getTrendingMovies } from "../lib/API";
 import { Carousel } from "../components/Carousel";
+import { CarouselItem } from "../components/CarouselItem";
 
 export class Movies extends Lightning.Component {
   static _template() {
     return {
+      w: 1920,
+      h: 1080,
       Background: {
         w: 1920,
         h: 1080,
@@ -22,9 +25,9 @@ export class Movies extends Lightning.Component {
 
     data.results.map(movie => {
       movies.push({
-        text: {
-          text: movie.title,
-        }
+        type: CarouselItem,
+        title: movie.title,
+        imageUrl: `https://image.tmdb.org/t/p/w440_and_h660_face${movie.poster_path}`
       });
     })
 
