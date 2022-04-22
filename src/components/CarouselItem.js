@@ -3,6 +3,7 @@ import { Lightning, Utils } from "@lightningjs/sdk";
 export class CarouselItem extends Lightning.Component {
   static _template() {
     return {
+      movieId: this.bindProp("movideId"),
       flexItem: { margin: 10 },
       w: 300,
       h: 455,

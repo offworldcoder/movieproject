@@ -18,7 +18,7 @@ export default {
       component: Movies
     },
     {
-      path: 'details',
+      path: 'details/:movieId',
       component: MovieDetails
     },
     // {

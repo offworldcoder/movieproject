@@ -1,4 +1,4 @@
-import { Lightning } from "@lightningjs/sdk";
+import { Lightning, Router } from "@lightningjs/sdk";
 
 export class Carousel extends Lightning.Component {
   static _template() {
@@ -45,6 +45,14 @@ export class Carousel extends Lightning.Component {
 
     this.index++;
     this.updateItemFocus();
+  }
+
+  _handleEnter() {
+    const children = this.tag("Results").children;
+    const movieId = children[this.index].movieId;
+    console.log(`_handleEnter movideId ${movieId}`);
+
+    Router.navigate(`details/${movieId}`);
   }
 
   updateItemFocus() {

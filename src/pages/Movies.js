@@ -2,6 +2,7 @@ import { Lightning, Utils } from "@lightningjs/sdk";
 import { getTrendingMovies } from "../lib/API";
 import { Carousel } from "../components/Carousel";
 import { CarouselItem } from "../components/CarouselItem";
+import { MovieDetails } from "./MovieDetails";
 
 export class Movies extends Lightning.Component {
   static _template() {
@@ -32,7 +33,8 @@ export class Movies extends Lightning.Component {
       movies.push({
         type: CarouselItem,
         title: this.truncatedTitle(movie.title, 18),
-        imageUrl: `https://image.tmdb.org/t/p/w440_and_h660_face${movie.poster_path}`
+        imageUrl: `https://image.tmdb.org/t/p/w440_and_h660_face${movie.poster_path}`,
+        movieId: movie.id
       });
     })
 
