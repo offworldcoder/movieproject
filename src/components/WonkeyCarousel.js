@@ -57,6 +57,33 @@ export class WonkeyCarousel extends Lightning.Component {
     }
   }
 
+  setupItemPositionsAdvanced() {
+    this.itemPositions = [];
+    for (let i = 0; i < 7; i++) {
+      const angle = -180 + i * (180 / 6);
+      const x = (1600 / 2) + (1200 / 2) * Math.cos(this.degToRad(angle));
+      const y = 1 * Math.sin(this.degToRad(angle));
+      const duration = 0.2;
+      this.itemPositions.push({
+        smooth: {
+          x: [x, { duration: duration }],
+          y: [y, { duration: duration }],
+          rotation: [this.degToRad(-30 + i * 10), { duration: duration }]
+        }
+      })
+    }
+
+    const numItemsOnScreen = this.itemPositions.length;
+    const numChildren = this.tag("Results").children.length;
+    for (let idx = 0; idx < numChildren; idx++) {
+      if (idx < numItemsOnScreen) {
+        this.tag("Results").children[idx].patch(this.itemPositions[idx]);
+      } else {
+        this.tag("Results").children[idx].patch(this.itemPositions[this.itemPositions.length - 1]);
+      }
+    }
+  }
+
   _handleLeft() {
     if (this.moving || this.index === 0) {
       return;

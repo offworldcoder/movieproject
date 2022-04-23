@@ -85,10 +85,10 @@ export class MovieDetails extends Lightning.Component {
           p: 'x',
           v: { 0: 1860, 0.5: 1880, 1: 1860 },
         },
-        //  {
-        //   p: 'rotation',
-        //   v: { 0: -0.3, 0.3: 0.1, 0.6: 0.2, 1: -0.3 }
-        // }
+        {
+          p: 'scale',
+          v: { 0: 1.0, 0.5: 1.2, 1: 1.0 }
+        }
       ]
     }).start();
   }
@@ -104,8 +104,6 @@ export class MovieDetails extends Lightning.Component {
     console.log(`MovieDetails: movieId is ${JSON.stringify(args)}`);
     console.log(`MovieDetails: movieId is ${args.movieId}`);
     this.movieId = args.movieId;
-
-    // this.tag("Background").alpha = 0.000001;
     this.useTheDetails(args.movieId);
   }
 

@@ -1,7 +1,7 @@
 import { Lightning } from "@lightningjs/sdk";
 import { getSimilarMovies } from "../lib/API";
-import { Carousel } from "../components/Carousel";
 import { CarouselItem } from "../components/CarouselItem";
+import { WonkeyCarousel } from "../components/WonkeyCarousel";
 export class SimilarMovies extends Lightning.Component {
   static _template() {
     return {
@@ -12,8 +12,8 @@ export class SimilarMovies extends Lightning.Component {
         color: 0xffffff00
       },
       Carousel: {
-        y: 300,
-        type: Carousel
+        y: 100,
+        type: WonkeyCarousel
       }
     }
   }
@@ -48,6 +48,9 @@ export class SimilarMovies extends Lightning.Component {
     this.tag("Carousel").patch({
       movies: movies
     });
+
+    this.tag("Carousel").setupItemPositionsAdvanced();
+    this.tag("Carousel").updateItemFocusAfterMovingRight();
   }
 
   truncatedTitle(title, max) {
