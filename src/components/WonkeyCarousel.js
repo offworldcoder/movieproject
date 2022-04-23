@@ -10,7 +10,7 @@ export class WonkeyCarousel extends Lightning.Component {
         color: 0xaa222222
       },
       Results: {
-        y: 250,
+        y: 200,
         mountY: 0.5,
         children: this.bindProp('movies')
       }
@@ -35,9 +35,6 @@ export class WonkeyCarousel extends Lightning.Component {
   }
 
   setupItemPositions() {
-    const width = 300;
-    const margin = 20;
-
     this.itemPositions = [];
     for (let i = 0; i < 7; i++) {
       const angle = -180 + i * (180 / 6);
@@ -47,7 +44,7 @@ export class WonkeyCarousel extends Lightning.Component {
         smooth: {
           x: x,
           y: y,
-          rotation: 0, //this.degToRad(-20 + i * 10)
+          rotation: this.degToRad(-30 + i * 10)
         }
       })
     }
@@ -143,7 +140,7 @@ export class WonkeyCarousel extends Lightning.Component {
     let { leftMost, rightMost } = this.getLeftRightBoundaries(this.index, max);
 
     console.log(`index ${this.index} leftMost ${leftMost} children.length ${children.length}`);
-    if (leftMost == 0 || leftMost >= max) {
+    if (leftMost == 0 || leftMost >= max - 1) {
       return;
     }
 
