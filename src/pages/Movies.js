@@ -1,6 +1,7 @@
 import { Lightning, Utils } from "@lightningjs/sdk";
 import { getTrendingMovies } from "../lib/API";
 import { Carousel } from "../components/Carousel";
+import { WonkeyCarousel } from "../components/WonkeyCarousel";
 import { CarouselItem } from "../components/CarouselItem";
 import { MovieDetails } from "./MovieDetails";
 
@@ -14,9 +15,13 @@ export class Movies extends Lightning.Component {
         h: 1080,
         src: Utils.asset("images/background.jpeg")
       },
+      // Carousel: {
+      //   y: 300,
+      //   type: Carousel
+      // },
       Carousel: {
         y: 300,
-        type: Carousel
+        type: WonkeyCarousel
       }
     }
   }
@@ -44,7 +49,8 @@ export class Movies extends Lightning.Component {
       movies: movies
     });
 
-    this.tag("Carousel").updateItemFocus();
+    this.tag("Carousel").updateItemFocusAfterMovingRight();
+    this.tag("Carousel").setupItemPositions();
   }
 
   truncatedTitle(title, max) {
