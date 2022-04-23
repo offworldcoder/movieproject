@@ -104,6 +104,11 @@ export class WonkeyCarousel extends Lightning.Component {
 
     this.highlightCursor();
 
+    console.log(`index ${this.index} leftMost ${leftMost} children.length ${children.length}`);
+    if (this.index < 2) {
+      return;
+    }
+
     let previousPosition = {
       x: children[children.length - 1].x,
       y: children[children.length - 1].y,
