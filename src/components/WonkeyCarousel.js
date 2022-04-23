@@ -3,12 +3,8 @@ import { Lightning, Router } from "@lightningjs/sdk";
 export class WonkeyCarousel extends Lightning.Component {
   static _template() {
     return {
-      Background: {
-        rect: true,
-        w: 1920,
-        h: 500,
-        color: 0xaa222222
-      },
+      w: 1920,
+      h: 500,
       Results: {
         y: 200,
         mountY: 0.5,

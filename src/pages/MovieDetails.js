@@ -57,7 +57,9 @@ export class MovieDetails extends Lightning.Component {
       },
       Arrow: {
         x: 1860,
-        y: 1000,
+        y: 1050,
+        w: 111,
+        h: 111,
         mount: 1.0,
         src: Utils.asset("images/right-arrow.png")
       }
@@ -65,6 +67,7 @@ export class MovieDetails extends Lightning.Component {
   }
 
   _init() {
+    this.arrow = this.tag("Arrow");
     this.tag('Background').on('txLoaded', () => {
       console.log('texture loaded: ' + this.tag('Image').src)
       this.tag('Background').patch({
@@ -73,6 +76,21 @@ export class MovieDetails extends Lightning.Component {
         }
       });
     })
+
+    this.arrow.animation({
+      duration: 2,
+      repeat: -1,
+      actions: [
+        {
+          p: 'x',
+          v: { 0: 1860, 0.5: 1880, 1: 1860 },
+        },
+        //  {
+        //   p: 'rotation',
+        //   v: { 0: -0.3, 0.3: 0.1, 0.6: 0.2, 1: -0.3 }
+        // }
+      ]
+    }).start();
   }
 
   _disable() {
