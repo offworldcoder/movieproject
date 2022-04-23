@@ -97,8 +97,6 @@ export class WonkeyCarousel extends Lightning.Component {
     if (this.moving || this.index === children.length - 1) {
       return;
     }
-
-    console.log("** doing _handleRight");
     this.index++;
     this.updateItemFocusAfterMovingRight();
   }
@@ -131,7 +129,6 @@ export class WonkeyCarousel extends Lightning.Component {
         );
       } else {
         if (idx - leftMost > -1) {
-          console.log(`idx ${idx} leftMost ${leftMost} idx - leftMost ${idx - leftMost}`);
           children[idx].patch(
             this.itemPositions[idx - leftMost]
           );

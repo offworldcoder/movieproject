@@ -2,17 +2,33 @@ import { Lightning } from "@lightningjs/sdk";
 import { getSimilarMovies } from "../lib/API";
 import { CarouselItem } from "../components/CarouselItem";
 import { WonkeyCarousel } from "../components/WonkeyCarousel";
+import { getMovieDetails } from "../lib/API";
+
 export class SimilarMovies extends Lightning.Component {
   static _template() {
     return {
       Background: {
-        rect: true,
         w: 1920,
         h: 1080,
-        color: 0xffffff00
+      },
+      Details: {
+        w: 600,
+        h: 800,
+      },
+      Label: {
+        x: 20,
+        y: 20,
+        text: {
+          fontSize: 80,
+          textColor: 0xff000000,
+          highlightOffset: 1,
+          shadow: true,
+          shadowColor: 0xffffffff,
+          text: this.bindProp("title")
+        }
       },
       Carousel: {
-        y: 100,
+        y: 150,
         type: WonkeyCarousel
       }
     }
@@ -44,6 +60,14 @@ export class SimilarMovies extends Lightning.Component {
     })
 
     console.log(`movies ${JSON.stringify(movies)}`);
+
+    const movieDetails = await getMovieDetails(movieId);
+    console.log(`MovieDetails: movieDetails ${JSON.stringify(movieDetails)}`)
+    const backgroundPosterURL = `https://image.tmdb.org/t/p/w1066_and_h600_bestv2${movieDetails.backdrop_path}`
+    this.tag("Background").patch({
+      src: backgroundPosterURL
+    });
+    this.title = `Movies similar to ${movieDetails.title}`;
 
     this.tag("Carousel").patch({
       movies: movies
