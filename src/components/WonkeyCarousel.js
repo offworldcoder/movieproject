@@ -18,7 +18,7 @@ export class WonkeyCarousel extends Lightning.Component {
   }
 
   _init() {
-    this.index = 0;
+    this.index = 3;
     this.moving = false;
 
     this.tag("Results").transition('x').on('start', () => {
@@ -40,10 +40,13 @@ export class WonkeyCarousel extends Lightning.Component {
 
     this.itemPositions = [];
     for (let i = 0; i < 7; i++) {
+      const angle = -180 + i * (180 / 6);
+      const x = (1920 / 2) + (1200 / 2) * Math.cos(angle / 180 * Math.PI);
+      const y = 400 * Math.sin(angle / 180 * Math.PI);
       this.itemPositions.push({
         smooth: {
-          x: 20 + margin + i * (width + margin),
-          y: 0,
+          x: x,
+          y: y,
           rotation: 0, //this.degToRad(-20 + i * 10)
         }
       })
@@ -55,9 +58,7 @@ export class WonkeyCarousel extends Lightning.Component {
       if (idx < numItemsOnScreen) {
         this.tag("Results").children[idx].patch(this.itemPositions[idx]);
       } else {
-        this.tag("Results").children[idx].patch({
-          x: 1920
-        });
+        this.tag("Results").children[idx].patch(this.itemPositions[this.itemPositions.length - 1]);
       }
     }
   }
@@ -112,12 +113,9 @@ export class WonkeyCarousel extends Lightning.Component {
 
     for (let idx = children.length - 1; idx >= 0; idx--) {
       if (idx > rightMost) {
-        children[idx].patch({
-          smooth: {
-            x: 1920,
-            rotation: 0
-          }
-        });
+        children[idx].patch(
+          this.itemPositions[this.itemPositions.length - 1]
+        );
       } else {
         if (idx - leftMost > -1) {
           console.log(`idx ${idx} leftMost ${leftMost} idx - leftMost ${idx - leftMost}`);
@@ -130,7 +128,7 @@ export class WonkeyCarousel extends Lightning.Component {
   }
 
   getLeftRightBoundaries(index, max) {
-    let leftMost = index > 2 ? index - 2 : 0;
+    let leftMost = index > 3 ? index - 3 : 0;
     leftMost = leftMost < max ? leftMost : max;
     const rightMost = leftMost + 6;
     return { leftMost, rightMost };
@@ -151,12 +149,9 @@ export class WonkeyCarousel extends Lightning.Component {
 
     for (let idx = 0; idx < children.length; idx++) {
       if (idx < leftMost) {
-        children[idx].patch({
-          smooth: {
-            x: -300,
-            rotation: 0
-          }
-        });
+        children[idx].patch(
+          this.itemPositions[0]
+        );
       } else {
         if (idx < rightMost) {
           children[idx].patch(
@@ -172,15 +167,16 @@ export class WonkeyCarousel extends Lightning.Component {
     for (let i = 0; i < children.length; i++) {
       const item = children[i];
       if (i != this.index) {
+        const z = i < this.index ? this.index : children.length - i;
         item.patch({
           smooth: { scale: 1.0 },
-          zIndex: 1,
+          zIndex: z,
         })
       }
       else {
         item.patch({
           smooth: { scale: 1.5 },
-          zIndex: 2
+          zIndex: 100,
         })
       }
     }
