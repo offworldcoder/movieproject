@@ -5,7 +5,7 @@ export class WonkeyCarousel extends Lightning.Component {
     return {
       Background: {
         rect: true,
-        w: 1920,
+        w: 1800,
         h: 500,
         color: 0xaa222222
       },
@@ -41,9 +41,9 @@ export class WonkeyCarousel extends Lightning.Component {
     this.itemPositions = [];
     for (let i = 0; i < 7; i++) {
       this.itemPositions.push({
-        x: margin + i * (width + margin),
-        y: i * 10,
-        rotation: this.degToRad(i * 5)
+        x: 20 + margin + i * (width + margin),
+        y: 0,
+        rotation: 0, //this.degToRad(-20 + i * 10)
       })
     }
 
@@ -99,13 +99,14 @@ export class WonkeyCarousel extends Lightning.Component {
   updateItemFocusAfterMovingLeft() {
     const children = this.tag("Results").children;
     let leftMost = this.index > 2 ? this.index - 2 : 0;
-    leftMost = leftMost < children.length - 3 ? leftMost : children.length - 6;
+    const max = children.length - 5;
+    leftMost = leftMost < max ? leftMost : max;
     const rightMost = leftMost + 6;
 
     this.highlightCursor();
 
     console.log(`index ${this.index} leftMost ${leftMost} children.length ${children.length}`);
-    if (this.index < 2) {
+    if (this.index < 2 || leftMost >= max - 1) {
       return;
     }
 
@@ -148,10 +149,12 @@ export class WonkeyCarousel extends Lightning.Component {
 
     const children = this.tag("Results").children;
     let leftMost = this.index > 2 ? this.index - 2 : 0;
-    leftMost = leftMost < children.length - 3 ? leftMost : children.length - 6;
+    const max = children.length - 5;
+    leftMost = leftMost < max ? leftMost : max;
     const rightMost = leftMost + 6;
 
-    if (leftMost == 0) {
+    console.log(`index ${this.index} leftMost ${leftMost} children.length ${children.length}`);
+    if (leftMost == 0 || leftMost >= max) {
       return;
     }
 
@@ -162,7 +165,6 @@ export class WonkeyCarousel extends Lightning.Component {
     }
 
     for (let idx = 0; idx < children.length; idx++) {
-      console.log(`** assigning ${idx}`);
       const currentPosition = {
         x: children[idx].x,
         y: children[idx].y,
@@ -181,9 +183,9 @@ export class WonkeyCarousel extends Lightning.Component {
           // Smooth transition to the previous item's position
           children[idx].patch({
             smooth: {
-              x: previousPosition.x,
-              y: previousPosition.y,
-              rotation: previousPosition.rotation
+              x: [previousPosition.x, { duration: 0.5 }],
+              y: [previousPosition.y, { duration: 0.5 }],
+              rotation: [previousPosition.rotation, { duration: 0.5 }]
             }
           });
         }
