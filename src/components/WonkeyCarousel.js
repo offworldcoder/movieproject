@@ -5,7 +5,7 @@ export class WonkeyCarousel extends Lightning.Component {
     return {
       Background: {
         rect: true,
-        w: 1800,
+        w: 1920,
         h: 500,
         color: 0xaa222222
       },
@@ -100,10 +100,8 @@ export class WonkeyCarousel extends Lightning.Component {
 
   updateItemFocusAfterMovingLeft() {
     const children = this.tag("Results").children;
-    let leftMost = this.index > 2 ? this.index - 2 : 0;
     const max = children.length - 5;
-    leftMost = leftMost < max ? leftMost : max;
-    const rightMost = leftMost + 6;
+    let { leftMost, rightMost } = this.getLeftRightBoundaries(this.index, max);
 
     this.highlightCursor();
 
@@ -121,7 +119,8 @@ export class WonkeyCarousel extends Lightning.Component {
           }
         });
       } else {
-        if (idx <= rightMost) {
+        if (idx - leftMost > -1) {
+          console.log(`idx ${idx} leftMost ${leftMost} idx - leftMost ${idx - leftMost}`);
           children[idx].patch(
             this.itemPositions[idx - leftMost]
           );
@@ -130,15 +129,20 @@ export class WonkeyCarousel extends Lightning.Component {
     }
   }
 
+  getLeftRightBoundaries(index, max) {
+    let leftMost = index > 2 ? index - 2 : 0;
+    leftMost = leftMost < max ? leftMost : max;
+    const rightMost = leftMost + 6;
+    return { leftMost, rightMost };
+  }
+
   updateItemFocusAfterMovingRight() {
     console.log("* updateItemFocusAfterMovingRight");
     this.highlightCursor();
 
     const children = this.tag("Results").children;
-    let leftMost = this.index > 2 ? this.index - 2 : 0;
     const max = children.length - 5;
-    leftMost = leftMost < max ? leftMost : max;
-    const rightMost = leftMost + 6;
+    let { leftMost, rightMost } = this.getLeftRightBoundaries(this.index, max);
 
     console.log(`index ${this.index} leftMost ${leftMost} children.length ${children.length}`);
     if (leftMost == 0 || leftMost >= max) {
