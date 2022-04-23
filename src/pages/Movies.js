@@ -49,8 +49,8 @@ export class Movies extends Lightning.Component {
       movies: movies
     });
 
-    this.tag("Carousel").updateItemFocusAfterMovingRight();
     this.tag("Carousel").setupItemPositions();
+    this.tag("Carousel").updateItemFocusAfterMovingRight();
   }
 
   truncatedTitle(title, max) {

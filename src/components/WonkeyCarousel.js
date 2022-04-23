@@ -61,7 +61,7 @@ export class WonkeyCarousel extends Lightning.Component {
   }
 
   _enable() {
-    this.updateItemFocusAfterMovingRight();
+    // this.updateItemFocusAfterMovingRight();
   }
 
   _handleLeft() {
@@ -73,11 +73,13 @@ export class WonkeyCarousel extends Lightning.Component {
   }
 
   _handleRight() {
+    console.log("** _handleRight");
     const children = this.tag("Results").children;
     if (this.moving || this.index === children.length - 1) {
       return;
     }
 
+    console.log("** doing _handleRight");
     this.index++;
     this.updateItemFocusAfterMovingRight();
   }
@@ -96,57 +98,96 @@ export class WonkeyCarousel extends Lightning.Component {
 
   updateItemFocusAfterMovingLeft() {
     const children = this.tag("Results").children;
-    for (let i = 0; i < children.length; i++) {
-      const item = children[i];
-      if (i != this.index) {
-        item.patch({
-          smooth: { scale: 1.0 },
-          zIndex: 1,
-        })
-      }
-      else {
-        item.patch({
-          smooth: { scale: 1.2 },
-          zIndex: 2
-        })
+    let leftMost = this.index > 2 ? this.index - 2 : 0;
+    leftMost = leftMost < children.length - 3 ? leftMost : children.length - 6;
+    const rightMost = leftMost + 6;
 
-        let previousPosition = {
-          x: children[children.length - 1].x,
-          y: children[children.length - 1].y,
-          rotation: children[children.length - 1].rotation,
-        }
+    this.highlightCursor();
 
-        if (i > 2 && i < children.length - 3) {
-          for (let idx = children.length - 1; idx >= 0; idx--) {
-            if (idx == children.length - 1) {
-              children[idx].patch({
-                smooth: {
-                  x: 1920,
-                  rotation: 0
-                }
-              });
-            } else {
-              let currentPosition = {
-                x: children[idx].x,
-                y: children[idx].y,
-                rotation: children[idx].rotation,
-              }
-              children[idx].patch({
-                smooth: {
-                  x: previousPosition.x,
-                  y: previousPosition.y,
-                  rotation: previousPosition.rotation,
-                }
-              });
-              previousPosition = currentPosition;
-            }
+    let previousPosition = {
+      x: children[children.length - 1].x,
+      y: children[children.length - 1].y,
+      rotation: children[children.length - 1].rotation,
+    }
+
+    for (let idx = children.length - 1; idx >= 0; idx--) {
+      if (idx > rightMost) {
+        children[idx].patch({
+          smooth: {
+            x: 1920,
+            rotation: 0
           }
+        });
+      } else {
+        let currentPosition = {
+          x: children[idx].x,
+          y: children[idx].y,
+          rotation: children[idx].rotation,
         }
+        children[idx].patch({
+          smooth: {
+            x: previousPosition.x,
+            y: previousPosition.y,
+            rotation: previousPosition.rotation,
+          }
+
+        });
+        previousPosition = currentPosition;
       }
     }
   }
 
   updateItemFocusAfterMovingRight() {
+    console.log("* updateItemFocusAfterMovingRight");
+    this.highlightCursor();
+
+    const children = this.tag("Results").children;
+    let leftMost = this.index > 2 ? this.index - 2 : 0;
+    leftMost = leftMost < children.length - 3 ? leftMost : children.length - 6;
+    const rightMost = leftMost + 6;
+
+    if (leftMost == 0) {
+      return;
+    }
+
+    let previousPosition = {
+      x: children[0].x,
+      y: children[0].y,
+      rotation: children[0].rotation,
+    }
+
+    for (let idx = 0; idx < children.length; idx++) {
+      console.log(`** assigning ${idx}`);
+      const currentPosition = {
+        x: children[idx].x,
+        y: children[idx].y,
+        rotation: children[idx].rotation,
+      }
+      if (idx < leftMost) {
+        // Hide off left side of screen
+        children[idx].patch({
+          smooth: {
+            x: -300,
+            rotation: 0
+          }
+        });
+      } else {
+        if (idx <= rightMost + 2) {
+          // Smooth transition to the previous item's position
+          children[idx].patch({
+            smooth: {
+              x: previousPosition.x,
+              y: previousPosition.y,
+              rotation: previousPosition.rotation
+            }
+          });
+        }
+      }
+      previousPosition = currentPosition;
+    }
+  }
+
+  highlightCursor() {
     const children = this.tag("Results").children;
     for (let i = 0; i < children.length; i++) {
       const item = children[i];
@@ -158,42 +199,9 @@ export class WonkeyCarousel extends Lightning.Component {
       }
       else {
         item.patch({
-          smooth: { scale: 1.2 },
+          smooth: { scale: 1.5 },
           zIndex: 2
         })
-
-        let previousPosition = {
-          x: children[0].x,
-          y: children[0].y,
-          rotation: children[0].rotation,
-        }
-
-        if (i >= 2 && i < children.length - 4) {
-          for (let idx = 0; idx < children.length; idx++) {
-            if (idx == 0) {
-              children[idx].patch({
-                smooth: {
-                  x: -300,
-                  rotation: 0
-                }
-              });
-            } else {
-              let currentPosition = {
-                x: children[idx].x,
-                y: children[idx].y,
-                rotation: children[idx].rotation,
-              }
-              children[idx].patch({
-                smooth: {
-                  x: previousPosition.x,
-                  y: previousPosition.y,
-                  rotation: previousPosition.rotation
-                }
-              });
-              previousPosition = currentPosition;
-            }
-          }
-        }
       }
     }
   }
