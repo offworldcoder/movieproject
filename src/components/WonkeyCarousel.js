@@ -38,13 +38,14 @@ export class WonkeyCarousel extends Lightning.Component {
     this.itemPositions = [];
     for (let i = 0; i < 7; i++) {
       const angle = -180 + i * (180 / 6);
-      const x = (1920 / 2) + (1200 / 2) * Math.cos(angle / 180 * Math.PI);
-      const y = 400 * Math.sin(angle / 180 * Math.PI);
+      const x = (1600 / 2) + (1200 / 2) * Math.cos(this.degToRad(angle));
+      const y = 350 * Math.sin(this.degToRad(angle));
+      const duration = 0.2;
       this.itemPositions.push({
         smooth: {
-          x: x,
-          y: y,
-          rotation: this.degToRad(-30 + i * 10)
+          x: [x, { duration: duration }],
+          y: [y, { duration: duration }],
+          rotation: [this.degToRad(-30 + i * 10), { duration: duration }]
         }
       })
     }
@@ -60,10 +61,6 @@ export class WonkeyCarousel extends Lightning.Component {
     }
   }
 
-  _enable() {
-    // this.updateItemFocusAfterMovingRight();
-  }
-
   _handleLeft() {
     if (this.moving || this.index === 0) {
       return;
@@ -73,7 +70,6 @@ export class WonkeyCarousel extends Lightning.Component {
   }
 
   _handleRight() {
-    console.log("** _handleRight");
     const children = this.tag("Results").children;
     if (this.moving || this.index === children.length - 1) {
       return;
@@ -91,8 +87,6 @@ export class WonkeyCarousel extends Lightning.Component {
 
     const children = this.tag("Results").children;
     const movieId = children[this.index].movieId;
-    console.log(`_handleEnter movieId ${movieId}`);
-
     Router.navigate(`details/${movieId}`);
   }
 
@@ -103,7 +97,6 @@ export class WonkeyCarousel extends Lightning.Component {
 
     this.highlightCursor();
 
-    console.log(`index ${this.index} leftMost ${leftMost} children.length ${children.length}`);
     if (this.index < 2 || leftMost >= max - 1) {
       return;
     }
@@ -132,14 +125,12 @@ export class WonkeyCarousel extends Lightning.Component {
   }
 
   updateItemFocusAfterMovingRight() {
-    console.log("* updateItemFocusAfterMovingRight");
     this.highlightCursor();
 
     const children = this.tag("Results").children;
     const max = children.length - 5;
     let { leftMost, rightMost } = this.getLeftRightBoundaries(this.index, max);
 
-    console.log(`index ${this.index} leftMost ${leftMost} children.length ${children.length}`);
     if (leftMost == 0 || leftMost >= max - 1) {
       return;
     }
