@@ -26,10 +26,10 @@ export class CarouselItem extends Lightning.Component {
       },
       Title: {
         x: 150,
-        y: 410,
+        y: 415,
         mountX: 0.5,
         text: {
-          fontSize: 25,
+          fontSize: 18,
           text: this.bindProp('title')
         }
       }
