@@ -10,33 +10,33 @@ export class MovieDetails extends Lightning.Component {
       },
       Details: {
         x: 20,
-        y: 720,
-        w: 1880,
-        h: 350,
+        y: 680,
+        w: 1920 - 80,
+        h: 330,
         rect: true,
         colorTop: 0xaa111111,
         colorBottom: 0x00111111,
+        flex: {
+          direction: 'column',
+          padding: 20,
+        },
         Title: {
-          x: 500,
-          y: 20,
           text: {
             text: this.bindProp('title')
           }
         },
         ReleaseDate: {
-          x: 1860,
-          y: 20,
-          mountX: 1.0,
           text: {
+            fontSize: 25,
             text: this.bindProp('releaseDate')
           }
         },
         Overview: {
-          x: 20,
-          y: 80,
           w: 1800,
-          h: 380,
+          padding: 40,
           text: {
+            fontSize: 30,
+            lineHeight: 40,
             text: this.bindProp('overview')
           }
         }
@@ -44,14 +44,15 @@ export class MovieDetails extends Lightning.Component {
       MovieImage: {
         x: 20,
         y: 100,
-        w: 500,
-        h: 620,
+        w: 395,
+        h: 580,
         rect: true,
         color: 0xaa111111,
         Image: {
           x: 20,
           y: 20,
-          w: 450,
+          w: 254 * 1.4,
+          h: 381 * 1.4,
           src: this.bindProp("movieImageURL")
         }
       },
